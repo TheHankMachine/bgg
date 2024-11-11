@@ -52,6 +52,11 @@ class Song {
         this.audio.pause();
     }
 
+    stop(){
+        this.playingId++;
+        this.audio.pause();
+    }
+
     getDuration(){
         return this.audio?.duration ?? null;
     }

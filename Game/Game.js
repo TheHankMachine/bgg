@@ -55,10 +55,18 @@ class Game {
     }
 
     onSubmit(text){
+        this.tracks.current?.stop();
+
         const raw = scene.inputInstance.text.text.trim();
+        if(raw.length == 0) return;
+
         const correct = this.matchGuess(raw) == this.tracks.current.title;
-//        console.log(correct);
-        this.tracks.next();
+
+        if(correct){
+            this.tracks.next();
+        }else{
+            this.boombox.bounce();
+        }
     }
 }
 

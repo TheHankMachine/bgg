@@ -10,9 +10,13 @@ class Input {
     constructor(){
         this.text = scene.add.text(scene.width * 0.5, scene.height * 0.8, "").setOrigin(0.5, 0.5);
 
+        let lastTimeStamp = 0;
+
         this.keyListener = scene.input.keyboard.on('keydown', event => {
             this.focused = true;
             if(!this.enabled) return;
+            if(lastTimeStamp == event.timeStamp) return;
+            lastTimeStamp = event.timeStamp;
 
             const key = event.key;
 
