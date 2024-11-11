@@ -31,6 +31,9 @@ class Scene extends Phaser.Scene{
         this.width = config.width;
         this.height = config.height;
 
+        this.load.image('boombox', 'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/boombox8colours.png');
+//      "https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/boombox8colours.png"
+
 //        initInput();
     }
 
@@ -42,24 +45,27 @@ class Scene extends Phaser.Scene{
     }
 
     update(){
-        if(this.gameInstance == null && this.input.focused){
-            this.gameInstance = new Game();
-            this.text.destroy();
+        if(this.gameInstance == null){
+            if(this.input.focused){
+                this.gameInstance = new Game();
+                this.text.destroy();
+            }
+            return;
         }
 
 //        if (!this.input.mouse.locked) {
 //            this.text.setVisible(true);
 //            return;
 //        }
-//        UpdateList.update();
+        UpdateList.update();
 //        this.text.setVisible(false);
     }
 
 }
 
 const config = {
-    width: 256 * 2,
-    height: 224 * 2,
+    width: 256,
+    height: 224,
     type: Phaser.WEBGL,
     // parent: 'phaser-example',
     
