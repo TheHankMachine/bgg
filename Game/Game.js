@@ -55,7 +55,6 @@ class Game {
     }
 
     onSubmit(text){
-        console.log(this.tracks.current);
         this.tracks.current?.stop();
 
         const raw = scene.inputInstance.text.text.trim();
