@@ -38,7 +38,7 @@ class Scene extends Phaser.Scene{
     }
 
     create(){
-        this.input = new Input();
+        this.inputInstance = new Input();
 //        BlurBuffer.init();
 
         this.text = scene.add.text(this.width * 0.5, this.height * 0.5, "press any key to start").setOrigin(0.5, 0.5);
@@ -46,7 +46,7 @@ class Scene extends Phaser.Scene{
 
     update(){
         if(this.gameInstance == null){
-            if(this.input.focused){
+            if(this.inputInstance.focused){
                 this.gameInstance = new Game();
                 this.text.destroy();
             }

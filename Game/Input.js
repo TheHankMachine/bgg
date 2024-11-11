@@ -1,10 +1,14 @@
+const clickListeners = [];
+
 class Input {
 
     enabled = false;
     focused = false;
 
+    enterFunc = (text) => null;
+
     constructor(){
-        this.text = scene.add.text(10, 10, "-").setOrigin(0, 0);
+        this.text = scene.add.text(scene.width * 0.5, scene.height * 0.8, "").setOrigin(0.5, 0.5);
 
         this.keyListener = scene.input.keyboard.on('keydown', event => {
             this.focused = true;
@@ -12,16 +16,33 @@ class Input {
 
             const key = event.key;
 
-            if(key == "Backspace"){
+            if(key == "Enter"){
+                this.enterFunc(this.text.text);
+                this.text.text = "";
+            }else if(key == "Backspace"){
                 this.text.text = this.text.text.slice(0, -1);
             }else if(key.length == 1){
                 this.text.text += event.key;
             }
         });
 
-//        this.mouseListener = scene.input.on('pointerdown', event => {
-//            console.log(event);
-//        });
+        this.mouseListener = scene.input.on('pointerdown', event => {
+            for(const clickListener of clickListeners){
+                const e = clickListener.obj;
+
+                const x1 = e.x - e._displayOriginX;
+                const y1 = e.y - e._displayOriginY;
+                const x2 = x1 + e.width;
+                const y2 = y1 + e.height;
+
+                if(
+                    event.downX > x1 && event.downX < x2 &&
+                    event.downY > y1 && event.downY < y2
+                ){
+                    clickListener.onClick();
+                }
+            }
+        });
     }
 
     getMouseLoc(){

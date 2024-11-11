@@ -1,5 +1,7 @@
 class Song {
 
+    playingId = 0;
+
     loaded = false;
     audio = null;
     clipDuration = 10;
@@ -8,11 +10,11 @@ class Song {
     clipDuration = 0;
 
     constructor(index){
-        this.title = songData.title[index],
-        this.album = songData.album_values[songData.album[index]],
-        this.lead_vocal = songData.lead_vocal_values[songData.lead_vocal[index]],
-        this.songwriter = songData.songwriter_values[songData.songwriter[index]],
-        this.url = `https://ia${songData.url_id_values[songData.url_id[index]]}.us.archive.org/${songData.url_index_values[songData.url_index[index]]}/items/${songData.url_album_values[songData.url_album[index]]}/${songData.url_track[index]}.mp3`
+        this.title = songData.title[index];
+        this.album = songData.album_values[songData.album[index]];
+        this.lead_vocal = songData.lead_vocal_values[songData.lead_vocal[index]];
+        this.songwriter = songData.songwriter_values[songData.songwriter[index]];
+        this.url = `https://ia${songData.url_id_values[songData.url_id[index]]}.us.archive.org/${songData.url_index_values[songData.url_index[index]]}/items/${songData.url_album_values[songData.url_album[index]]}/${songData.url_track[index]}.mp3`;
     }
 
     setClip(start, duration){
@@ -36,8 +38,17 @@ class Song {
     }
 
     async play(){
+        this.playingId++;
+        const id = this.playingId;
+
+        this.audio.pause();
+        this.audio.currentTime = this.clipStart;
+
         await this.audio.play();
         await new Promise(r => setTimeout(r, this.clipDuration * 1_000));
+
+        if(id != this.playingId) return;
+
         this.audio.pause();
     }
 

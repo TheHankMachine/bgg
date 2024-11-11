@@ -1,24 +1,27 @@
 const boomboxFriction = 0.90;
 const boomboxGravity = 1;
-const boomboxGroundPlane = 150;
+const boomboxGroundPlane = 153;
 
 class Boombox {
 
     constructor(){
-        const x = scene.width * 0.5;
-
         this.c = new Array(2).fill().map((e, i) => {
-            const a = scene.add.circle(x + (i - 0.5) * 125, -10 -Math.random() * 70, 5, 0xffffff);
-            a.vy = 0;
-            return a;
+            return {
+                x: scene.width * 0.5 + (i - 0.5) * 125,
+                y: -10 - 30 * Math.random(),
+                vy: 0,
+            };
         });
 
-
-        this.img = scene.add.image(x, 0, 'boombox').setOrigin(0.5, 1);
-//
-//        this.img.angle = 10;
+        this.img = scene.add.image(scene.width * 0.5, 0, 'boombox').setOrigin(0.5, 1);
 
         UpdateList.add(this);
+    }
+
+    bounce(){
+        this.c.forEach(e => {
+            e.vy = - 3 - Math.random() * 2;
+        });
     }
 
     update(){
@@ -39,15 +42,6 @@ class Boombox {
         ) * 180 / Math.PI;
 
         this.img.y = (this.c[1].y + this.c[0].y) / 2;
-
-//        this.c1.vy += 0.5;
-//        this.c2.vy += 0.5;
-//
-//        this.c1.vy *= 0.98;
-//        this.c2.vy *= 0.98;
-//
-//        this.c1.y += this.c1.vy;
-//        this.c2.y += this.c2.vy;
     }
 
 }
