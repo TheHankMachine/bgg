@@ -5,17 +5,14 @@ class Game {
         this.tracks = new Tracks();
         this.boombox = new Boombox();
 
-        this.boombox.onSettle = () => {
-            console.log('settle')
-            new Cassette();
-        }
-
         clickListeners.push({
             obj: this.boombox.img,
             onClick: () => this.onClick()
         });
 
-        this.text = scene.add.text(scene.width * 0.5, scene.height * 0.9, "").setOrigin(0.5, 0.5);
+        this.next();
+
+        this.text = scene.add.text(scene.width * 0.5, scene.height * 0.3, "", textConfig).setOrigin(0.5, 0.5);
 
         UpdateList.add(this);
     }
@@ -56,7 +53,12 @@ class Game {
 
         const guess = this.matchGuess(raw);
         this.text.text = guess;
+    }
 
+    async next(){
+        await this.tracks.next();
+        this.boombox.cassette?.remove();
+        this.boombox.cassette = new Cassette();
     }
 
     onSubmit(text){
@@ -68,7 +70,7 @@ class Game {
         const correct = this.matchGuess(raw) == this.tracks.current.title;
 
         if(correct){
-            this.tracks.next();
+            this.next();
         }else{
             this.boombox.bounce();
         }
@@ -102,4 +104,8 @@ function levenshteinDistance(a, b) {
         }
     }
     return matrix[b.length][a.length];
+}
+
+function reveal(){
+    return scene.gameInstance?.tracks.current.title;
 }

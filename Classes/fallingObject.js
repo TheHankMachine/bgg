@@ -1,5 +1,7 @@
 class FallingObject {
 
+    boomboxGravity = 1;
+
     settled = false;
     onSettle = () => null;
 
@@ -39,7 +41,7 @@ class FallingObject {
 
     update(){
         this.points.forEach(e => {
-            e.vy += boomboxGravity;
+            e.vy += this.boomboxGravity;
             e.vy *= boomboxFriction;
             e.y += e.vy;
 

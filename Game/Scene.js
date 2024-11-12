@@ -1,3 +1,5 @@
+var scene;
+
 const palette = {
     white1:     0xfaf6e9,
     white2:     0xf8ddad,
@@ -15,7 +17,7 @@ const depths = {
     UI: 3
 }
 
-var scene;
+var textConfig;
 
 class Scene extends Phaser.Scene{
 
@@ -27,6 +29,11 @@ class Scene extends Phaser.Scene{
 
     preload(){
         scene = this;
+
+        textConfig = {
+            align: "center",
+            wordWrap: { width: scene.width }
+        }
 
         this.width = config.width;
         this.height = config.height;

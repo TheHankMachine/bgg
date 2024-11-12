@@ -8,8 +8,6 @@ class Tracks {
     constructor(){
         const n = songData.title.length;
         this.songOrder = new Array(n).fill().map((_, i) => [Math.random(), i]).sort((a, b) => a[0] - b[0]).map(e => e[1]);
-
-        this.next();
     }
 
     async next(){
