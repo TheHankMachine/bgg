@@ -32,6 +32,8 @@ class Scene extends Phaser.Scene{
         this.height = config.height;
 
         this.load.image('boombox', 'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/boombox.png');
+        this.load.image('cassettecover', 'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/cassettecover.png');
+
         this.load.spritesheet(
             'cassette',
             'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/cassette.png',

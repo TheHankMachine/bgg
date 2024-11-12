@@ -9,7 +9,10 @@ class Boombox extends FallingObject{
 
         this.img = scene.add.image(0, 0, 'boombox').setOrigin(0.5, 1);
 
-        this.init(scene.width / 2, 100);
+        this.init(scene.width / 2, 153);
+
+
+//                new Cassette();
 
 //        UpdateList.add(this);
     }

@@ -1,6 +1,13 @@
 class FallingObject {
 
+    settled = false;
+    onSettle = () => null;
+
+    groundPlane;
+
     init(x, y){
+        this.groundPlane = y;
+
         this.img.x = x;
         const x1 = x - this.img._displayOriginX;
         const x2 = x1 + this.img.width;
@@ -22,14 +29,22 @@ class FallingObject {
         });
     }
 
+    settle(){
+        this.points.forEach(e => {
+            e.y = this.groundPlane;
+            e.vy = 0;
+        });
+        this.onSettle();
+    }
+
     update(){
         this.points.forEach(e => {
             e.vy += boomboxGravity;
             e.vy *= boomboxFriction;
             e.y += e.vy;
 
-            if(e.y > boomboxGroundPlane){
-                e.y = boomboxGroundPlane;
+            if(e.y > this.groundPlane){
+                e.y = this.groundPlane;
                 e.vy *= -1;
             }
         });
@@ -40,6 +55,17 @@ class FallingObject {
         ) * 180 / Math.PI;
 
         this.img.y = (this.points[1].y + this.points[0].y) / 2;
+
+        const a = this.points.every(e =>
+            Math.abs(e.y - this.groundPlane) < 1 &&
+            Math.abs(e.vy) < 1
+        );
+
+        if(!this.settled && a){
+            this.settle();
+        }
+
+        this.settled = a;
     }
 
 }

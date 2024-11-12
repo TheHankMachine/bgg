@@ -5,6 +5,11 @@ class Game {
         this.tracks = new Tracks();
         this.boombox = new Boombox();
 
+        this.boombox.onSettle = () => {
+            console.log('settle')
+            new Cassette();
+        }
+
         clickListeners.push({
             obj: this.boombox.img,
             onClick: () => this.onClick()
