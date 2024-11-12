@@ -13,7 +13,7 @@ class Boombox {
             };
         });
 
-        this.img = scene.add.image(scene.width * 0.5, 0, 'boombox').setOrigin(0.5, 1);
+        this.img = scene.add.image(scene.width * 0.5, 0, 'cassette').setOrigin(0.5, 1);
 
         UpdateList.add(this);
     }

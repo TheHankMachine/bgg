@@ -31,7 +31,16 @@ class Scene extends Phaser.Scene{
         this.width = config.width;
         this.height = config.height;
 
-        this.load.image('boombox', 'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/boombox8colours.png');
+        this.load.image('boombox', 'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/boombox.png');
+        this.load.spritesheet(
+            'cassette',
+            'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/cassette.png',
+            {
+                frameWidth: 27,
+                frameHeight: 18
+            }
+        );
+
 //      "https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/boombox8colours.png"
 
 //        initInput();
