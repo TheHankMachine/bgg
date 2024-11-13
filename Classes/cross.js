@@ -1,4 +1,4 @@
-const numStrikes = 5;
+const numStrikes = 3;
 
 class Cross extends FallingObject {
 
@@ -10,7 +10,7 @@ class Cross extends FallingObject {
 
         this.init(
             scene.width * 0.5 + 30 * (index - (numStrikes - 1) / 2),
-            80
+            75
         );
     }
 

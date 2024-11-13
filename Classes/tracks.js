@@ -14,23 +14,23 @@ class Tracks {
         this.songOrder = new Array(n).fill().map((_, i) => [Math.random(), i]).sort((a, b) => a[0] - b[0]).map(e => e[1]);
     }
 
-    async next(){
+    async next(loc = 0){
         if(this.buffer.length == 0){
-            await this.loadNext();
+            await this.loadNext(loc);
         }else if(this.buffer.length < trackBuffer){
-            this.loadNext();
+            this.loadNext(loc);
         }
         this.current = this.buffer.splice(0, 1)[0];
     }
 
-    async loadNext(){
+    async loadNext(loc = 0){
         if(this.buffer.length >= trackBuffer) return;
 
         const songIndex = this.songOrder.splice(0, 1)[0];
         const song = new Song(songIndex);
 
-        await song.setRandomClip(3, 0.5);
-//        await song.load();
+        await song.setRandomClip(1, loc);
+        await song.load();
         this.buffer.push(song);
 
         // recursive async call scares me

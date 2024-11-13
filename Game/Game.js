@@ -1,4 +1,7 @@
 class Game {
+
+    stage = 0;
+
     constructor(){
         scene.inputInstance.enterFunc = (text) => this.onSubmit(text);
 
@@ -12,7 +15,7 @@ class Game {
 
         this.next();
 
-        this.text = scene.add.text(scene.width * 0.5, scene.height * 0.275, "", textConfig).setOrigin(0.5, 0.5);
+        this.text = scene.add.text(scene.width * 0.5, scene.height * 0.225, "", textConfig).setOrigin(0.5, 0.5);
 
         UpdateList.add(this);
     }
@@ -44,7 +47,8 @@ class Game {
     }
 
     update(){
-        debug.text = `queue buffer: ${this.tracks.buffer.length}`
+        debug.text =`queue buffer: ${this.tracks.buffer.length}\nclip duration: ${f(this.stage).toFixed(2)}`
+//        debug.text += `\nqueue status: ${["awaiting load", "loading in background", "dormant"][Math.min(this.tracks.buffer.length, trackBuffer)]}`
 
         const raw = scene.inputInstance.text.text.trim();
         if(raw.length == 0){
@@ -57,13 +61,25 @@ class Game {
     }
 
     async next(){
+        this.strikes.forEach(e => e.remove());
+        this.strikes = [];
+
         this.boombox.cassette?.remove();
         this.boombox.cassette = null;
-        await this.tracks.next();
+
+        this.stage++;
+
+        const p = (1/20) * (this.stage - 1);
+        console.log(p);
+        await this.tracks.next(p);
+
+//        this.duration -= 0.5;
+        this.tracks.current.clipDuration = f(this.stage);
+
         this.boombox.cassette = new Cassette();
     }
 
-    numStrikes = 0;
+    strikes = [];
 
     onSubmit(text){
         this.tracks.current?.stop();
@@ -76,11 +92,21 @@ class Game {
         if(correct){
             this.next();
         }else{
-            new Cross(this.numStrikes);
-            this.numStrikes++;
+            this.strikes.push(new Cross(this.strikes.length));
             this.boombox.bounce();
         }
     }
+}
+
+function f(n){
+    const a = 5;
+    const b = 10;
+
+    return a * Math.exp(((1 - n) / (b - 1)) * Math.log(a));
+
+//    const a = 5;
+//    const b = 17.5;
+//    return b / (n + b / a - 1);
 }
 
 function textSimilarity(a, b){

@@ -73,8 +73,9 @@ class Scene extends Phaser.Scene{
         debug = scene.add.text(0, 0, "", {
 //            fontSize: 32,
 //            font: 'Arial',
+            align: "left",
             ...textConfig
-        });
+        }).setOrigin(0, 0);
         console.log(textConfig)
     }
 
