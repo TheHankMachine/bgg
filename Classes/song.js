@@ -32,7 +32,12 @@ class Song {
         this.clipDuration = duration;
 
         this.audio.currentTime = this.clipStart;
-        await this.load();
+        this.audio.volume = 0;
+        await this.audio.play();
+        await new Promise(r => setTimeout(r, this.clipDuration * 1_000));
+        this.audio.pause();
+        this.audio.volume = 1;
+        console.log('finihsed ')
     }
 
     async load(){
@@ -50,9 +55,10 @@ class Song {
 //        this.audio.pause();
 //        this.audio.fastSeek(this.clipStart);
         this.audio.currentTime = this.clipStart;
-        console.log(this.audio.readyState);
 
         await this.audio.play();
+        console.log(this.audio.readyState);
+
 
         if(id != this.playingId) return;
 

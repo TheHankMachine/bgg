@@ -1,4 +1,5 @@
 var scene;
+var debug;
 
 const palette = {
     white1:     0xfaf6e9,
@@ -44,9 +45,18 @@ class Scene extends Phaser.Scene{
                 frameHeight: 18
             }
         );
+        this.load.spritesheet(
+            'cross',
+            'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/cross.png',
+            {
+                frameWidth: 18,
+                frameHeight: 18
+            }
+        );
 
         textConfig = {
             align: "center",
+//            font: '"Press Start 2P"',
             wordWrap: { width: scene.width * 0.85 }
         }
 
@@ -60,6 +70,12 @@ class Scene extends Phaser.Scene{
 //        BlurBuffer.init();
 
         this.text = scene.add.text(this.width * 0.5, this.height * 0.5, "press any key to start").setOrigin(0.5, 0.5);
+        debug = scene.add.text(0, 0, "", {
+//            fontSize: 32,
+//            font: 'Arial',
+            ...textConfig
+        });
+        console.log(textConfig)
     }
 
     update(){

@@ -1,4 +1,4 @@
-const trackBuffer = 1;
+const trackBuffer = 2;
 
 class Tracks {
 

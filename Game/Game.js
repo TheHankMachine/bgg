@@ -44,6 +44,8 @@ class Game {
     }
 
     update(){
+        debug.text = `queue buffer: ${this.tracks.buffer.length}`
+
         const raw = scene.inputInstance.text.text.trim();
         if(raw.length == 0){
             this.text.text = "";
@@ -61,6 +63,8 @@ class Game {
         this.boombox.cassette = new Cassette();
     }
 
+    numStrikes = 0;
+
     onSubmit(text){
         this.tracks.current?.stop();
 
@@ -72,6 +76,8 @@ class Game {
         if(correct){
             this.next();
         }else{
+            new Cross(this.numStrikes);
+            this.numStrikes++;
             this.boombox.bounce();
         }
     }
