@@ -1,9 +1,13 @@
-const trackBuffer = 3;
+const trackBuffer = 1;
 
 class Tracks {
 
     current = null;
     buffer = [];
+
+    randomCrop = {
+
+    }
 
     constructor(){
         const n = songData.title.length;
@@ -24,7 +28,9 @@ class Tracks {
 
         const songIndex = this.songOrder.splice(0, 1)[0];
         const song = new Song(songIndex);
-        await song.load();
+
+        await song.setRandomClip(3, 0.5);
+//        await song.load();
         this.buffer.push(song);
 
         // recursive async call scares me

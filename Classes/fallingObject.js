@@ -1,6 +1,6 @@
 class FallingObject {
 
-    boomboxGravity = 1;
+    gravity = 1;
 
     settled = false;
     onSettle = () => null;
@@ -41,7 +41,7 @@ class FallingObject {
 
     update(){
         this.points.forEach(e => {
-            e.vy += this.boomboxGravity;
+            e.vy += this.gravity;
             e.vy *= boomboxFriction;
             e.y += e.vy;
 
@@ -68,6 +68,20 @@ class FallingObject {
         }
 
         this.settled = a;
+    }
+
+    async remove(){
+        this.gravity = -1;
+
+        await new Promise(r => setTimeout(r, 1_000));
+
+        this.destroy();
+
+        UpdateList.remove(this);
+    }
+
+    destroy(){
+        this.img.destroy()
     }
 
 }

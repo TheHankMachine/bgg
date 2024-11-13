@@ -30,11 +30,6 @@ class Scene extends Phaser.Scene{
     preload(){
         scene = this;
 
-        textConfig = {
-            align: "center",
-            wordWrap: { width: scene.width }
-        }
-
         this.width = config.width;
         this.height = config.height;
 
@@ -49,6 +44,11 @@ class Scene extends Phaser.Scene{
                 frameHeight: 18
             }
         );
+
+        textConfig = {
+            align: "center",
+            wordWrap: { width: scene.width * 0.85 }
+        }
 
 //      "https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/boombox8colours.png"
 

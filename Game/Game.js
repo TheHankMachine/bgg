@@ -12,16 +12,17 @@ class Game {
 
         this.next();
 
-        this.text = scene.add.text(scene.width * 0.5, scene.height * 0.3, "", textConfig).setOrigin(0.5, 0.5);
+        this.text = scene.add.text(scene.width * 0.5, scene.height * 0.275, "", textConfig).setOrigin(0.5, 0.5);
 
         UpdateList.add(this);
     }
 
     onClick(){
         const song = this.tracks.current;
-        if(song == null) return;
+        if(song == null || this.boombox.cassette == null) return;
 
-        song.setClip(0, 5);
+//        song.setClip(0, 10);
+
         song.play();
 
         this.boombox.bounce();
@@ -49,15 +50,14 @@ class Game {
             return;
         }
 
-//        const sorted = songData.title.map(e => [textSimilarity(raw, e), e]).sort((a, b) => b[0] - a[0]).map(e => e[1])
-
         const guess = this.matchGuess(raw);
         this.text.text = guess;
     }
 
     async next(){
-        await this.tracks.next();
         this.boombox.cassette?.remove();
+        this.boombox.cassette = null;
+        await this.tracks.next();
         this.boombox.cassette = new Cassette();
     }
 

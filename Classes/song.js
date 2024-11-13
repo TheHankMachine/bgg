@@ -15,6 +15,8 @@ class Song {
         this.lead_vocal = songData.lead_vocal_values[songData.lead_vocal[index]];
         this.songwriter = songData.songwriter_values[songData.songwriter[index]];
         this.url = `https://ia${songData.url_id_values[songData.url_id[index]]}.us.archive.org/${songData.url_index_values[songData.url_index[index]]}/items/${songData.url_album_values[songData.url_album[index]]}/${songData.url_track[index]}.mp3`;
+
+        this.audio = new Audio(this.url);
     }
 
     setClip(start, duration){
@@ -22,14 +24,18 @@ class Song {
         this.clipDuration = duration;
     }
 
-    setRandomClip(duration = 1, startPercentile = 0){
+    async setRandomClip(duration = 1, startPercentile = 0){
+        await this.load();
+
         const range = this.getDuration() - duration;
         this.clipStart = Math.random() * startPercentile * range;
         this.clipDuration = duration;
+
+        this.audio.currentTime = this.clipStart;
+        await this.load();
     }
 
     async load(){
-        this.audio = new Audio(this.url);
         // janky hack to wait for the audio to load
         await this.audio.play();
         this.audio.pause();
@@ -39,12 +45,20 @@ class Song {
 
     async play(){
         this.playingId++;
-        const id = this.playingId;
+        let id = this.playingId;
 
-        this.audio.pause();
+//        this.audio.pause();
+//        this.audio.fastSeek(this.clipStart);
         this.audio.currentTime = this.clipStart;
+        console.log(this.audio.readyState);
 
         await this.audio.play();
+
+        if(id != this.playingId) return;
+
+        this.playingId++;
+        id = this.playingId;
+
         await new Promise(r => setTimeout(r, this.clipDuration * 1_000));
 
         if(id != this.playingId) return;
@@ -58,7 +72,7 @@ class Song {
     }
 
     getDuration(){
-        return this.audio?.duration ?? null;
+        return this.audio.duration;
     }
 
 }

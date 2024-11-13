@@ -10,14 +10,4 @@ class Cassette extends FallingObject{
         this.init(scene.width / 2, boomBoxY - 24);
     }
 
-    async remove(){
-        this.boomboxGravity = -1;
-
-        await new Promise(r => setTimeout(r, 1_000));
-
-        this.img.destroy();
-
-        UpdateList.remove(this);
-    }
-
 }
