@@ -1,7 +1,7 @@
 const files = [
     {
         Data: ["json"],
-        Util: ["phaser.min", "UpdateList"],//, "Text"], "BlurBuffer"
+        Util: ["phaser.min", "UpdateList"],
         Classes: ["fallingObject", "cassette", "boombox", "tracks", "song", "Cross"],
         Game: ["Scene", "Input", "Game"]
     },

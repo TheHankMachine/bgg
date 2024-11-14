@@ -10,7 +10,7 @@ class Cross extends FallingObject {
 
         this.init(
             scene.width * 0.5 + 30 * (index - (numStrikes - 1) / 2),
-            75
+            77
         );
     }
 

@@ -30,7 +30,7 @@ class Tracks {
         const song = new Song(songIndex);
 
         await song.setRandomClip(1, loc);
-        await song.load();
+//        await song.load();
         this.buffer.push(song);
 
         // recursive async call scares me

@@ -2,13 +2,14 @@ var scene;
 var debug;
 
 const palette = {
-    white1:     0xfaf6e9,
-    white2:     0xf8ddad,
-    tone1:      0xf1bd60,
-    tone2:      0x903e30,
-    black1:     0x221e22,
-    black2:     0x4b3a36,
-    black3:     0x735649
+    dark:       0x543344,
+    blue1:      0x515262,
+//    white2:     0xf8ddad,
+//    tone1:      0xf1bd60,
+//    tone2:      0x903e30,
+//    black1:     0x221e22,
+//    black2:     0x4b3a36,
+//    black3:     0x735649
 }
 
 const depths = {
@@ -37,30 +38,23 @@ class Scene extends Phaser.Scene{
         this.load.image('boombox', 'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/boombox.png');
         this.load.image('cassettecover', 'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/cassettecover.png');
 
-        this.load.spritesheet(
-            'cassette',
-            'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/cassette.png',
-            {
-                frameWidth: 27,
-                frameHeight: 18
-            }
-        );
-        this.load.spritesheet(
-            'cross',
-            'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/cross.png',
-            {
-                frameWidth: 18,
-                frameHeight: 18
-            }
-        );
+        this.load.spritesheet('cassette', 'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/cassette.png', {frameWidth: 27, frameHeight: 18});
+        this.load.spritesheet('cross','https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/cross.png', {frameWidth: 18, frameHeight: 18});
 
         textConfig = {
             align: "center",
-//            font: '"Press Start 2P"',
-            wordWrap: { width: scene.width * 0.85 }
-        }
 
-//      "https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/boombox8colours.png"
+//            font: '"Press Start 2P"',
+//            fontSize: "32px",
+            fontFamily: 'Courier',
+            fontSize: 12,
+
+            wordWrap: { width: scene.width * 0.85 },
+//            strokeThickness: 1,
+//            color: "#c9cca1"
+            color: "#cca",
+//            stroke: '#cca'
+        }
 
 //        initInput();
     }
@@ -69,6 +63,8 @@ class Scene extends Phaser.Scene{
         this.inputInstance = new Input();
 //        BlurBuffer.init();
 
+        scene.add.rectangle(1, 151, 254, 93, palette.dark).setOrigin(0, 0).setDepth(-1);
+
         this.text = scene.add.text(this.width * 0.5, this.height * 0.5, "press any key to start").setOrigin(0.5, 0.5);
         debug = scene.add.text(0, 0, "", {
 //            fontSize: 32,
@@ -76,7 +72,6 @@ class Scene extends Phaser.Scene{
             align: "left",
             ...textConfig
         }).setOrigin(0, 0);
-        console.log(textConfig)
     }
 
     update(){
@@ -102,9 +97,8 @@ const config = {
     width: 256,
     height: 224,
     type: Phaser.WEBGL,
-    // parent: 'phaser-example',
     
-    backgroundColor: palette.black1,
+    backgroundColor: palette.blue1,
 
     scene: Scene,
 

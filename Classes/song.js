@@ -25,6 +25,8 @@ class Song {
     }
 
     async setRandomClip(duration = 1, startPercentile = 0){
+//        console.time(this.title);
+
         await this.load();
 
         const range = this.getDuration() - duration;
@@ -32,20 +34,49 @@ class Song {
         this.clipDuration = duration;
 
         this.audio.currentTime = this.clipStart;
-        this.audio.volume = 0;
-        await this.audio.play();
-        await new Promise(r => setTimeout(r, this.clipDuration * 1_000));
-        this.audio.pause();
-        this.audio.volume = 1;
-        console.log('finihsed ')
+        await this.load();
+
+//        console.timeEnd(this.title);
+//        this.audio.volume = 0;
+//        await this.audio.play();
+//        await new Promise(r => setTimeout(r, this.clipDuration * 1_000));
+//        this.audio.pause();
+//        this.audio.volume = 1;
+//        console.log('finihsed ')
     }
 
     async load(){
-        // janky hack to wait for the audio to load
+
+        let loaded = false;
+
+        this.audio.onplay = async () => {
+            await new Promise(r => setTimeout(r, this.clipDuration * 1_000));
+
+            loaded = true;
+        }
+
         await this.audio.play();
+
+        await wait(
+            () => loaded, 500
+        );
+
         this.audio.pause();
 
-        this.loaded = true;
+//        console.log("finished load")
+
+
+//        // janky hack to wait for the audio to load
+////        this.audio.volume = 0;
+//        await this.audio.play();
+//
+//        this.audio.onplay = () => {
+//            this.audio.pause();
+//        }
+////        this.audio.pause();
+////        this.audio.volume = 1;
+////
+////        this.loaded = true;
     }
 
     async play(){
@@ -53,33 +84,25 @@ class Song {
         let id = this.playingId;
 
         this.audio.pause();
-//        this.audio.fastSeek(this.clipStart);
+//
         this.audio.currentTime = this.clipStart;
-
+//        this.audio.volume = 1;
+//
         this.audio.onplay = async () => {
 //            if(id != this.playingId) return;
 //            id = this.playingId;
 
+            console.time("playback")
+//
             await new Promise(r => setTimeout(r, this.clipDuration * 1_000));
             if(id != this.playingId) return;
 
             this.audio.pause();
-        }
 
-        await this.audio.play();
-//        console.log(this.audio.readyState);
+            console.timeEnd("playback")
+        }
 //
-//
-//        if(id != this.playingId) return;
-//
-//        this.playingId++;
-//        id = this.playingId;
-//
-//        await new Promise(r => setTimeout(r, this.clipDuration * 1_000));
-//
-//        if(id != this.playingId) return;
-//
-//        this.audio.pause();
+        this.audio.play();
     }
 
     stop(){
@@ -91,4 +114,13 @@ class Song {
         return this.audio.duration;
     }
 
+}
+
+async function wait(predicate, pollrate = 1_000, maxTime = 10_000){
+    let time = 0;
+    while(!predicate() && time > maxTime){
+        await new Promise(r => setTimeout(r, pollrate));
+        time += pollrate;
+    }
+    return time > maxTime;
 }

@@ -8,7 +8,7 @@ class Input {
     enterFunc = (text) => null;
 
     constructor(){
-        this.text = scene.add.text(scene.width * 0.5, scene.height * 0.85, "", textConfig).setOrigin(0.5, 0.5);
+        this.text = scene.add.text(scene.width * 0.5, scene.height * 0.775, "", textConfig).setOrigin(0.5, 0);
 
         let lastTimeStamp = 0;
 

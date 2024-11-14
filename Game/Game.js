@@ -15,7 +15,7 @@ class Game {
 
         this.next();
 
-        this.text = scene.add.text(scene.width * 0.5, scene.height * 0.225, "", textConfig).setOrigin(0.5, 0.5);
+        this.text = scene.add.text(scene.width * 0.5, scene.height * 0.3, "", textConfig).setOrigin(0.5, 1);
 
         UpdateList.add(this);
     }
@@ -47,7 +47,7 @@ class Game {
     }
 
     update(){
-        debug.text =`queue buffer: ${this.tracks.buffer.length}\nclip duration: ${f(this.stage).toFixed(2)}`
+        debug.text =`queue buffer: ${this.tracks.buffer.length}\nclip duration: ${f(this.stage).toFixed(2)}`;
 //        debug.text += `\nqueue status: ${["awaiting load", "loading in background", "dormant"][Math.min(this.tracks.buffer.length, trackBuffer)]}`
 
         const raw = scene.inputInstance.text.text.trim();
@@ -70,7 +70,7 @@ class Game {
         this.stage++;
 
         const p = (1/20) * (this.stage - 1);
-        console.log(p);
+
         await this.tracks.next(p);
 
 //        this.duration -= 0.5;
@@ -103,7 +103,11 @@ function f(n){
     const b = 10;
 //    return 1;
 
-    return a * Math.exp(((1 - n) / (b - 1)) * Math.log(a));
+    const min = 0.5;
+
+    const v = a * Math.exp(((1 - n) / (b - 1)) * Math.log(a));
+
+    return Math.max(v, min)
 
 //    const a = 5;
 //    const b = 17.5;
