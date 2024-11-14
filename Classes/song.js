@@ -52,24 +52,34 @@ class Song {
         this.playingId++;
         let id = this.playingId;
 
-//        this.audio.pause();
+        this.audio.pause();
 //        this.audio.fastSeek(this.clipStart);
         this.audio.currentTime = this.clipStart;
 
+        this.audio.onplay = async () => {
+//            if(id != this.playingId) return;
+//            id = this.playingId;
+
+            await new Promise(r => setTimeout(r, this.clipDuration * 1_000));
+            if(id != this.playingId) return;
+
+            this.audio.pause();
+        }
+
         await this.audio.play();
-        console.log(this.audio.readyState);
-
-
-        if(id != this.playingId) return;
-
-        this.playingId++;
-        id = this.playingId;
-
-        await new Promise(r => setTimeout(r, this.clipDuration * 1_000));
-
-        if(id != this.playingId) return;
-
-        this.audio.pause();
+//        console.log(this.audio.readyState);
+//
+//
+//        if(id != this.playingId) return;
+//
+//        this.playingId++;
+//        id = this.playingId;
+//
+//        await new Promise(r => setTimeout(r, this.clipDuration * 1_000));
+//
+//        if(id != this.playingId) return;
+//
+//        this.audio.pause();
     }
 
     stop(){

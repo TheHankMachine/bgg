@@ -101,6 +101,7 @@ class Game {
 function f(n){
     const a = 5;
     const b = 10;
+//    return 1;
 
     return a * Math.exp(((1 - n) / (b - 1)) * Math.log(a));
 
