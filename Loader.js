@@ -2,7 +2,7 @@ const files = [
     {
         Data: ["json"],
         Util: ["phaser.min", "UpdateList"],
-        Classes: ["fallingObject", "cassette", "boombox", "tracks", "song", "Cross"],
+        Classes: ["fallingObject", "cassette", "boombox", "tracks", "song", "cross"],
         Game: ["Scene", "Input", "Game"]
     },
     "Start"
