@@ -1,5 +1,6 @@
 class Game {
 
+    score = 0;
     stage = 0;
 
     constructor(){
@@ -90,18 +91,25 @@ class Game {
         const correct = this.matchGuess(raw) == this.tracks.current.title;
 
         if(correct){
+            this.score += 1;
             this.next();
         }else{
-            this.strikes.push(new Cross(this.strikes.length));
             this.boombox.bounce();
+            if(this.strikes.length >= numStrikes){
+                alert("You lost :/\nthe correct answer was: " + reveal() + "\nyour score was: " + this.score);
+            }else{
+                this.strikes.push(new Cross(this.strikes.length));
+            }
         }
     }
 }
 
 function f(n){
-    const a = 5;
-    const b = 10;
-//    return 1;
+//    const a = 5;
+//    const b = 10;
+
+    const a = 10;
+    const b = 15;
 
     const min = 0.5;
 
