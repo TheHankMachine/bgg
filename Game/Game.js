@@ -3,8 +3,6 @@ class Game {
     score = 0;
     stage = 0;
 
-
-
     constructor(){
         scene.inputInstance.enterFunc = (text) => this.onSubmit(text);
 
@@ -50,7 +48,7 @@ class Game {
     }
 
     update(){
-        debug.text =`queue buffer: ${this.tracks.buffer.length}\nclip duration: ${f(this.stage).toFixed(2)}`;
+        debug.text =`queue buffer: ${this.tracks.buffer.length}\nclip duration: ${f(this.stage).toFixed(2)}\nscore; ${this.score}`;
 //        debug.text += `\nqueue status: ${["awaiting load", "loading in background", "dormant"][Math.min(this.tracks.buffer.length, trackBuffer)]}`
 
         if(!scene.inputInstance.enabled) return;
@@ -76,6 +74,8 @@ class Game {
 
         const p = (1/20) * (this.stage - 1);
 
+        scene.inputInstance.enabled = false
+
         await this.tracks.next(p);
 
 //        this.duration -= 0.5;
@@ -92,6 +92,8 @@ class Game {
         const raw = scene.inputInstance.text.text.trim();
         if(raw.length == 0) return;
 
+        this.text.text = ""
+
         const correct = this.matchGuess(raw) == this.tracks.current.title;
 
         if(correct){
@@ -100,10 +102,16 @@ class Game {
         }else{
             this.boombox.bounce();
             if(this.strikes.length >= numStrikes){
+
+//                this.boombox.cassette.remove();
+//                this.boombox.cassette = null;
+
                 this.tracks.current.clipDuration = 10;
                 this.tracks.current.play();
 
                 new GameOver();
+                this.strikes.forEach(e => e.remove());
+                this.strikes = [];
 
                 this.text.text = this.tracks.current.title;
 
@@ -126,7 +134,7 @@ class GameOver extends FallingObject{
 
 //        this.img.setFrame(Math.floor(Math.random() * 12));
 
-        this.init(scene.width / 2, boomBoxY - 24);
+        this.init(scene.width / 2, 98);
     }
 
 }
@@ -134,6 +142,8 @@ class GameOver extends FallingObject{
 function f(n){
 //    const a = 5;
 //    const b = 10;
+
+//    return 0.5;
 
     const a = 10;
     const b = 15;

@@ -50,12 +50,12 @@ class Scene extends Phaser.Scene{
 //            font: '"Press Start 2P"',
 //            fontSize: "32px",
             fontFamily: 'Courier',
-            fontSize: 12,
+            fontSize: 13,
 
             wordWrap: { width: scene.width * 0.85 },
 //            strokeThickness: 1,
-//            color: "#c9cca1"
-            color: "#cca",
+//            color: "#534"
+//            color: "#cca",
 //            stroke: '#cca'
         }
 
@@ -70,10 +70,10 @@ class Scene extends Phaser.Scene{
 
         this.text = scene.add.text(this.width * 0.5, this.height * 0.5, "press any key to start").setOrigin(0.5, 0.5);
         debug = scene.add.text(0, 0, "", {
-//            fontSize: 32,
 //            font: 'Arial',
+            ...textConfig,
+            fontSize: 11,
             align: "left",
-            ...textConfig
         }).setOrigin(0, 0);
     }
 

@@ -34,7 +34,7 @@ class Tracks {
         this.buffer.push(song);
 
         // recursive async call scares me
-        this.loadNext();
+        this.loadNext(loc);
     }
 
 }

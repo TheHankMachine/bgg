@@ -1,5 +1,7 @@
 class Song {
 
+//    static lastPercentile = 0;
+
     playingId = 0;
 
     loaded = false;
@@ -27,6 +29,8 @@ class Song {
     async setRandomClip(duration = 1, startPercentile = 0){
 //        console.time(this.title);
 
+//        this.lastPercentile = startPercentile;
+
         await this.load();
 
         const range = this.getDuration() - duration;
@@ -34,6 +38,7 @@ class Song {
         this.clipDuration = duration;
 
         this.audio.currentTime = this.clipStart;
+
         await this.load();
 
 //        console.timeEnd(this.title);
@@ -87,19 +92,46 @@ class Song {
 //
         this.audio.currentTime = this.clipStart;
 //        this.audio.volume = 1;
+
+        let starttime = -1;
 //
-        this.audio.onplay = async () => {
+        this.audio.ontimeupdate = async () => {
 //            if(id != this.playingId) return;
 //            id = this.playingId;
 
-            console.time("playback")
-//
-            await new Promise(r => setTimeout(r, this.clipDuration * 1_000));
-            if(id != this.playingId) return;
+            if (starttime < 0) {
+                starttime = this.audio.currentTime;
+                return;
+            }
 
-            this.audio.pause();
+            if(this.audio.currentTime > starttime) {
+                const elapsed = this.audio.currentTime - starttime
+                console.log("playback started")
 
-            console.timeEnd("playback")
+                this.audio.ontimeupdate = () => null;
+
+//                console.log(this.audio.currentTime)
+                //
+//                console.log(this.clipDuration, elapsed)
+
+                await new Promise(r => setTimeout(r, (this.clipDuration - elapsed) * 1_000));
+                if(id != this.playingId) return;
+
+                this.audio.pause();
+
+
+                this.audio.ontimeupdate = () => null
+            }
+
+
+
+//            console.time("playback")
+
+//            this.audio.ontimeupdate = () => null;
+
+
+
+//            console.timeEnd("playback")
         }
 //
         this.audio.play();
