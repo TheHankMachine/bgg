@@ -3,6 +3,8 @@ class Game {
     score = 0;
     stage = 0;
 
+
+
     constructor(){
         scene.inputInstance.enterFunc = (text) => this.onSubmit(text);
 
@@ -50,6 +52,8 @@ class Game {
     update(){
         debug.text =`queue buffer: ${this.tracks.buffer.length}\nclip duration: ${f(this.stage).toFixed(2)}`;
 //        debug.text += `\nqueue status: ${["awaiting load", "loading in background", "dormant"][Math.min(this.tracks.buffer.length, trackBuffer)]}`
+
+        if(!scene.inputInstance.enabled) return;
 
         const raw = scene.inputInstance.text.text.trim();
         if(raw.length == 0){
@@ -101,6 +105,10 @@ class Game {
 
                 new GameOver();
 
+                this.text.text = this.tracks.current.title;
+
+                scene.inputInstance.enabled = false;
+
 //                alert("You lost :/\nthe correct answer was: " + reveal() + "\nyour score was: " + this.score);
             }else{
                 this.strikes.push(new Cross(this.strikes.length));
@@ -114,7 +122,7 @@ class GameOver extends FallingObject{
     constructor(x){
         super();
 
-        this.img = scene.add.image(0, 0, 'gameover').setOrigin(0.5, 1);
+        this.img = scene.add.image(0, 0, 'gameover').setOrigin(0.5, 1).setDepth(2);
 
 //        this.img.setFrame(Math.floor(Math.random() * 12));
 
