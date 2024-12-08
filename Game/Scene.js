@@ -39,7 +39,7 @@ class Scene extends Phaser.Scene{
 
         this.load.image('boombox', url + 'boombox.png');
         this.load.image('cassettecover', url + 'cassettecover.png');
-//        this.load.image('gameover', url + 'gameover.png');
+        this.load.image('gameover', url + 'gameover.png');
 
         this.load.spritesheet('cassette', url + 'cassette.png', {frameWidth: 27, frameHeight: 18});
         this.load.spritesheet('cross', url +'cross.png', {frameWidth: 18, frameHeight: 18});

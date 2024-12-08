@@ -99,7 +99,7 @@ class Game {
                 this.tracks.current.clipDuration = 10;
                 this.tracks.current.play();
 
-
+                new GameOver();
 
 //                alert("You lost :/\nthe correct answer was: " + reveal() + "\nyour score was: " + this.score);
             }else{
@@ -107,6 +107,20 @@ class Game {
             }
         }
     }
+}
+
+class GameOver extends FallingObject{
+
+    constructor(x){
+        super();
+
+        this.img = scene.add.image(0, 0, 'gameover').setOrigin(0.5, 1);
+
+//        this.img.setFrame(Math.floor(Math.random() * 12));
+
+        this.init(scene.width / 2, boomBoxY - 24);
+    }
+
 }
 
 function f(n){
