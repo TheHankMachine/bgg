@@ -35,11 +35,14 @@ class Scene extends Phaser.Scene{
         this.width = config.width;
         this.height = config.height;
 
-        this.load.image('boombox', 'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/boombox.png');
-        this.load.image('cassettecover', 'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/cassettecover.png');
+        const url = "https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/"
 
-        this.load.spritesheet('cassette', 'https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/cassette.png', {frameWidth: 27, frameHeight: 18});
-        this.load.spritesheet('cross','https://raw.githubusercontent.com/TheHankMachine/bgg/refs/heads/main/Assets/cross.png', {frameWidth: 18, frameHeight: 18});
+        this.load.image('boombox', url + 'boombox.png');
+        this.load.image('cassettecover', url + 'cassettecover.png');
+//        this.load.image('gameover', url + 'gameover.png');
+
+        this.load.spritesheet('cassette', url + 'cassette.png', {frameWidth: 27, frameHeight: 18});
+        this.load.spritesheet('cross', url +'cross.png', {frameWidth: 18, frameHeight: 18});
 
         textConfig = {
             align: "center",

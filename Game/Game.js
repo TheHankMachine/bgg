@@ -96,7 +96,12 @@ class Game {
         }else{
             this.boombox.bounce();
             if(this.strikes.length >= numStrikes){
-                alert("You lost :/\nthe correct answer was: " + reveal() + "\nyour score was: " + this.score);
+                this.tracks.current.clipDuration = 10;
+                this.tracks.current.play();
+
+
+
+//                alert("You lost :/\nthe correct answer was: " + reveal() + "\nyour score was: " + this.score);
             }else{
                 this.strikes.push(new Cross(this.strikes.length));
             }
